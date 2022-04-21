@@ -34,6 +34,8 @@ export const RestoreDefault = (Animations, States, AppProcessState, VideoURLs, V
         States.setPreviewGalleryDisplay('none')
         States.setQualityDisplay('none')
         States.setExternalLinkDisplay('none')
+        States.setPreviewGalleryZIndex(-1)
+        States.setPreviewVideoZIndex(-1)
     }, 800)
 
     Animations.MainContentFadeIn.start()

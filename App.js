@@ -70,8 +70,10 @@ export default function App() {
     const PreviewDisplay = useState('none')
     const PreviewVideoOpac = useRef(new Animated.Value(0)).current
     const PreviewVideoDisplay = useState('none')
+    const PreviewVideoZIndex = useState(-1)
     const PreviewGalleyOpac = useRef(new Animated.Value(0)).current
     const PreviewGalleryDisplay = useState('none')
+    const PreviewGalleryZIndex = useState(-1)
 
     const NavBorderTop = useRef(new Animated.Value(0)).current
     const ClipboardActiveColor = useState('#eee')
@@ -148,8 +150,12 @@ export default function App() {
         setPreviewDisplay: PreviewDisplay[1],
         PreviewVideoDisplay: PreviewVideoDisplay[0],
         setPreviewVideoDisplay: PreviewVideoDisplay[1],
+        PreviewVideoZIndex: PreviewVideoZIndex[0],
+        setPreviewVideoZIndex: PreviewVideoZIndex[1],
         PreviewGalleryDisplay: PreviewGalleryDisplay[0],
         setPreviewGalleryDisplay: PreviewGalleryDisplay[1],
+        PreviewGalleryZIndex: PreviewGalleryZIndex[0],
+        setPreviewGalleryZIndex: PreviewGalleryZIndex[1],
         
         ClipboardActiveColor: ClipboardActiveColor[0],
         setClipboardActiveColor: ClipboardActiveColor[1],
@@ -242,11 +248,11 @@ export default function App() {
                                 source={{uri: VideoURLs[0]}}
                                 resizeMode='contain'
                                 useNativeControls={true}
-                                style={[{display: States.PreviewVideoDisplay, opacity: PreviewVideoOpac}]}
+                                style={[{display: States.PreviewVideoDisplay, opacity: PreviewVideoOpac, zIndex: States.PreviewVideoZIndex}]}
                             />
                             <PreviewGallery
                                 images={imageGallery}
-                                style={[{display: States.PreviewGalleryDisplay, opacity: PreviewGalleyOpac}]}
+                                style={[{display: States.PreviewGalleryDisplay, opacity: PreviewGalleyOpac, zIndex: States.PreviewGalleryZIndex}]}
                             />
                         </PreviewCon>
                         <NavRow style={[{borderTopWidth: NavBorderTop}]}>
@@ -316,7 +322,7 @@ const ActionManager = async (Type, Animations, States, MainButtonBorderLeft, Dow
             if (States.IconDownloadDisplay==='flex' && States.PreviewDisplay==='none') {
                 await DownloadManager(States.URL, Animations, States, AppProcessState, VideoURLs, VideoNames, APIResponse, MainButtonBorderLeft, DownloadProgressBarBorderLeft)
             } else if (States.IconDownloadDisplay==='flex' && States.PreviewDisplay==='flex') {
-                await DownloadFile(States, Animations, VideoURLs, VideoNames, DownloadProgressBarBorderLeft, AppProcessState)
+                await DownloadFile(States, Animations, VideoURLs, VideoNames, DownloadProgressBarBorderLeft)
             } else if (States.IconCrossDisplay==='flex') {
                 RestoreDefault(Animations, States, AppProcessState, VideoURLs, VideoNames, APIResponse, MainButtonBorderLeft, ProgressBarValues, DownloadProgressBarBorderLeft)
             }

@@ -214,19 +214,16 @@ const DownloadEndAnim = (Animations, States, VideoURLs) => {
         imageGallery.push(imageUri(VideoURLs[i]))
     }
 
-    // if(VideoURLs.length>1) {
-    //     States.setPreviewGalleryDisplay('flex')
-    // } else {
-    //     States.setPreviewVideoDisplay('flex')
-    // }
-
     setTimeout(function(){
         Animations.CancelButtonFadeIn.start()
+
         if(VideoURLs.length>1) {
             States.setPreviewGalleryDisplay('flex')
+            States.setPreviewGalleryZIndex(0)
             Animations.PreviewGalleryFadeIn.start()
         } else {
             States.setPreviewVideoDisplay('flex')
+            States.setPreviewVideoZIndex(0)
             Animations.PreviewVideoFadeIn.start()
         }
     }, 1800)
