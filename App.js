@@ -19,9 +19,6 @@ import {
     DownloadButtonsTextCon,
     DownloadButtonsTouchableCon,
     DownloadProgressBar,
-    DownloadProgressBarButtonsBar,
-    DownloadProgressBarButtonsCon,
-    DownloadProgressBarButtonsIcon,
     DownloadProgressBarCon,
     DownloadProgressBarText,
     DownloadProgressBarTopRow,
@@ -35,20 +32,21 @@ import {
     NavMiniMenuIconCon,
     NavMiniMenuRow,
     NavMiniMenuText,
-    NavRow,
-    PreviewCon,
+    NavRow, PreviewAV,
+    PreviewCon, PreviewGallery,
     res,
     URLInput
 } from './style'
-import {DownloadFile, PauseDownloading, StartDownloading, StopDownloading} from './DownloadingFile'
+import {DownloadFile, ProgressBarValues} from './DownloadingFile'
 import {DownloadManager} from './ConvertingPhase'
-import {Sleep, GetRandomInt, Countdown} from './VoidTools'
+import {RestoreDefault} from './RestoreDefault'
+import {Countdown} from './VoidTools'
+import {imageGallery} from "./ImageGallery";
 
 let AppProcessState = 'main'
 
 let VideoURLs = new Array()
 let VideoNames = new Array()
-let VideoSelected = new Array()
 let APIResponse = {
     error: 'none',
     quality: 'none',
@@ -70,12 +68,18 @@ export default function App() {
 
     const PreviewConHeight = useRef(new Animated.Value(0)).current
     const PreviewDisplay = useState('none')
+    const PreviewVideoOpac = useRef(new Animated.Value(0)).current
+    const PreviewVideoDisplay = useState('none')
+    const PreviewGalleyOpac = useRef(new Animated.Value(0)).current
+    const PreviewGalleryDisplay = useState('none')
 
     const NavBorderTop = useRef(new Animated.Value(0)).current
     const ClipboardActiveColor = useState('#eee')
     const ClipboardActiveDisable = useState(false)
     const IconDownloadDisplay = useState('flex')
     const IconCrossDisplay = useState('none')
+    const DownloadActiveColor = useState('#eee')
+    const DownloadActiveDisable = useState(false)
     const ExternalLinkActiveColor = useState('#bbb')
     const ExternalLinkActiveDisable = useState(true)
 
@@ -90,6 +94,7 @@ export default function App() {
     const DownloadProgressBarBorderLeft = useRef(new Animated.Value(1)).current
     const DownloadProgressBarBottom = useRef(new Animated.Value(-200)).current
     const DownloadProgressBarPercentage = useState(0)
+    const DownloadProgressBarUnit = useState('%')
 
     const Animations = {
         MainContentFadeIn: Animated.timing(MainContentOpac, { toValue: 1, duration: 600, useNativeDriver: true }),
@@ -107,6 +112,10 @@ export default function App() {
 
         PreviewConHeightExtend: Animated.timing(PreviewConHeight, { toValue: res.vh-300, duration: 400, useNativeDriver: false }),
         PreviewConHeightShrink: Animated.timing(PreviewConHeight, { toValue: 0, duration: 400, useNativeDriver: false }),
+        PreviewVideoFadeIn: Animated.timing(PreviewVideoOpac, { toValue: 1, duration: 400, useNativeDriver: true }),
+        PreviewVideoFadeOut: Animated.timing(PreviewVideoOpac, { toValue: 0, duration: 400, useNativeDriver: true }),
+        PreviewGalleryFadeIn: Animated.timing(PreviewGalleyOpac, { toValue: 1, duration: 400, useNativeDriver: true }),
+        PreviewGalleryFadeOut: Animated.timing(QualityOpac, { toValue: 0, duration: 400, useNativeDriver: true }),
 
         NavBorderTopExtend: Animated.timing(NavBorderTop, { toValue: 1, duration: 400, useNativeDriver: false }),
         NavBorderTopShrink: Animated.timing(NavBorderTop, { toValue: 0, duration: 400, useNativeDriver: false }),
@@ -137,6 +146,10 @@ export default function App() {
         
         PreviewDisplay: PreviewDisplay[0],
         setPreviewDisplay: PreviewDisplay[1],
+        PreviewVideoDisplay: PreviewVideoDisplay[0],
+        setPreviewVideoDisplay: PreviewVideoDisplay[1],
+        PreviewGalleryDisplay: PreviewGalleryDisplay[0],
+        setPreviewGalleryDisplay: PreviewGalleryDisplay[1],
         
         ClipboardActiveColor: ClipboardActiveColor[0],
         setClipboardActiveColor: ClipboardActiveColor[1],
@@ -146,6 +159,10 @@ export default function App() {
         setIconDownloadDisplay: IconDownloadDisplay[1],
         IconCrossDisplay: IconCrossDisplay[0],
         setIconCrossDisplay: IconCrossDisplay[1],
+        DownloadActiveColor: DownloadActiveColor[0],
+        setDownloadActiveColor: DownloadActiveColor[1],
+        DownloadActiveState: DownloadActiveDisable[0],
+        setDownloadActiveState: DownloadActiveDisable[1],
         ExternalLinkActiveColor: ExternalLinkActiveColor[0],
         setExternalLinkActiveColor: ExternalLinkActiveColor[1],
         ExternalLinkActiveState: ExternalLinkActiveDisable[0],
@@ -157,7 +174,9 @@ export default function App() {
         setExternalLinkDisplay: ExternalLinkDisplay[1],
 
         DownloadProgressBarPercentage: DownloadProgressBarPercentage[0],
-        setDownloadProgressBarPercentage: DownloadProgressBarPercentage[1]
+        setDownloadProgressBarPercentage: DownloadProgressBarPercentage[1],
+        DownloadProgressBarUnit: DownloadProgressBarUnit[0],
+        setDownloadProgressBarUnit: DownloadProgressBarUnit[1]
     }
 
     useEffect(() => {
@@ -203,26 +222,41 @@ export default function App() {
                 <ContentCon style={[{opacity: MainContentOpac}]}>
                     <MainCon>
                         <MainButtonCon style={[{borderBottomWidth: MainButtonBorderBottom, borderTopWidth: MainButtonBorderTop, borderLeftWidth: MainButtonBorderLeft}]}>
-                            <URLInput placeholder='Wprowadź URL' placeholderTextColor='#fff' style={[{fontFamily: 'OpenSans_400Regular', opacity: URLInputOpac, display: States.URLInputDisplay}]} onChangeText={(url) => States.setURL(url)} value={States.URL}/>
+                            <URLInput
+                                value={States.URL}
+                                placeholder='Wprowadź URL'
+                                placeholderTextColor='#fff'
+                                onChangeText={(url) => States.setURL(url)}
+                                style={[{fontFamily: 'OpenSans_400Regular', opacity: URLInputOpac, display: States.URLInputDisplay}]}
+                            />
                             <DownloadButtonsCon style={[{opacity: CancelButtonOpac, display: States.CancelButtonDisplay}]}>
                                 <DownloadButtonsTouchableCon>
-                                    <DownloadButtonsTextCon>
+                                    <DownloadButtonsTextCon onPress={() => RestoreDefault(Animations, States, AppProcessState, VideoURLs, VideoNames, APIResponse, MainButtonBorderLeft, ProgressBarValues, DownloadProgressBarBorderLeft)}>
                                         <DownloadButtonsText>Wyczyść</DownloadButtonsText>
                                     </DownloadButtonsTextCon>
                                 </DownloadButtonsTouchableCon>
                             </DownloadButtonsCon>
                         </MainButtonCon>
                         <PreviewCon style={[{display: States.PreviewDisplay, height: PreviewConHeight}]}>
-
+                            <PreviewAV
+                                source={{uri: VideoURLs[0]}}
+                                resizeMode='contain'
+                                useNativeControls={true}
+                                style={[{display: States.PreviewVideoDisplay, opacity: PreviewVideoOpac}]}
+                            />
+                            <PreviewGallery
+                                images={imageGallery}
+                                style={[{display: States.PreviewGalleryDisplay, opacity: PreviewGalleyOpac}]}
+                            />
                         </PreviewCon>
                         <NavRow style={[{borderTopWidth: NavBorderTop}]}>
                             <NavButRow>
                                 <NavBut style={[{borderColor: States.ClipboardActiveColor}]} disabled={States.ClipboardActiveState} onPress={() => ActionManager('clipboard', Animations, States, MainButtonBorderLeft, DownloadProgressBarBorderLeft)}>
                                     <NavIcon name='clipboard' size={25} style={[{color: States.ClipboardActiveColor}]}/>
                                 </NavBut>
-                                <NavBut style={[{width: 70}]} onPress={() => ActionManager('convert', Animations, States, MainButtonBorderLeft, DownloadProgressBarBorderLeft)}>
-                                    <NavIcon name='download' color='#eee' size={25} style={[{display: States.IconDownloadDisplay, marginTop: 5}]}/>
-                                    <NavIcon name='x' color='#eee' size={25} style={[{display: States.IconCrossDisplay, marginTop: 5}]}/>
+                                <NavBut style={[{width: 70, borderColor: States.DownloadActiveColor}]} disabled={States.DownloadActiveState} onPress={() => ActionManager('convert', Animations, States, MainButtonBorderLeft, DownloadProgressBarBorderLeft)}>
+                                    <NavIcon name='download' color='#eee' size={25} style={[{display: States.IconDownloadDisplay, marginTop: 5, color: States.DownloadActiveColor}]}/>
+                                    <NavIcon name='x' color='#eee' size={25} style={[{display: States.IconCrossDisplay, marginTop: 5, color: States.DownloadActiveColor}]}/>
                                 </NavBut>
                                 <NavBut style={[{borderColor: States.ExternalLinkActiveColor}]} disabled={States.ExternalLinkActiveState} onPress={() => ActionManager('externallink', Animations, States, MainButtonBorderLeft, DownloadProgressBarBorderLeft)}>
                                     <NavIcon name='external-link' size={25} style={[{color: States.ExternalLinkActiveColor}]}/>
@@ -266,18 +300,7 @@ export default function App() {
                 </APINotificationCon>
                 <DownloadProgressBarCon style={[{bottom: DownloadProgressBarBottom}]}>
                     <DownloadProgressBarTopRow>
-                        <DownloadProgressBarText>{States.DownloadProgressBarPercentage}%</DownloadProgressBarText>
-                        <DownloadProgressBarButtonsBar>
-                            <DownloadProgressBarButtonsCon onPress={() => StartDownloading()}>
-                                <DownloadProgressBarButtonsIcon name='controller-play'/>
-                            </DownloadProgressBarButtonsCon>
-                            <DownloadProgressBarButtonsCon onPress={() => PauseDownloading(VideoURLs)}>
-                                <DownloadProgressBarButtonsIcon name='controller-paus'/>
-                            </DownloadProgressBarButtonsCon>
-                            <DownloadProgressBarButtonsCon onPress={() => StopDownloading(Animations)}>
-                                <DownloadProgressBarButtonsIcon name='controller-stop'/>
-                            </DownloadProgressBarButtonsCon>
-                        </DownloadProgressBarButtonsBar>
+                        <DownloadProgressBarText>{States.DownloadProgressBarPercentage}{States.DownloadProgressBarUnit}</DownloadProgressBarText>
                     </DownloadProgressBarTopRow>
                     <DownloadProgressBar style={[{borderLeftWidth: DownloadProgressBarBorderLeft}]}></DownloadProgressBar>
                 </DownloadProgressBarCon>
@@ -291,15 +314,12 @@ const ActionManager = async (Type, Animations, States, MainButtonBorderLeft, Dow
     switch (Type) {
         case 'convert':
             if (States.IconDownloadDisplay==='flex' && States.PreviewDisplay==='none') {
-                DownloadManager(States.URL, Animations, States, AppProcessState, VideoURLs, VideoNames, APIResponse, MainButtonBorderLeft)
+                await DownloadManager(States.URL, Animations, States, AppProcessState, VideoURLs, VideoNames, APIResponse, MainButtonBorderLeft, DownloadProgressBarBorderLeft)
             } else if (States.IconDownloadDisplay==='flex' && States.PreviewDisplay==='flex') {
-                //JEŻELI COŚ SIĘ POBIERA TO RETURN
-                DownloadFile(States, Animations, VideoURLs, VideoNames, VideoSelected, DownloadProgressBarBorderLeft)
+                await DownloadFile(States, Animations, VideoURLs, VideoNames, DownloadProgressBarBorderLeft, AppProcessState)
             } else if (States.IconCrossDisplay==='flex') {
-                //CLEAR FORM
+                RestoreDefault(Animations, States, AppProcessState, VideoURLs, VideoNames, APIResponse, MainButtonBorderLeft, ProgressBarValues, DownloadProgressBarBorderLeft)
             }
-
-            //DODATKOWA OPCJA PODCZAS POBIERANIA I PIERWSZEGO WARIANTU (BLOCK Z KOMUNIKATEM)
             break;
 
         case 'clipboard':
@@ -308,7 +328,7 @@ const ActionManager = async (Type, Animations, States, MainButtonBorderLeft, Dow
 
             let text = await Clipboard.getString()
             States.setURL(text)
-            DownloadManager(text, Animations, States, AppProcessState, VideoURLs, VideoNames, APIResponse, MainButtonBorderLeft)
+            await DownloadManager(text, Animations, States, AppProcessState, VideoURLs, VideoNames, APIResponse, MainButtonBorderLeft, DownloadProgressBarBorderLeft)
             break;
 
         case 'externallink':
