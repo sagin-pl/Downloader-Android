@@ -1,4 +1,6 @@
 import styled from 'styled-components'
+import {Video} from 'expo-av'
+import Gallery from 'react-native-image-gallery'
 import {Dimensions, Animated, TouchableOpacity, TextInput} from 'react-native'
 import {Feather, MaterialIcons, Entypo} from "@expo/vector-icons";
 
@@ -73,6 +75,17 @@ export const DownloadButtonsText = styled.Text`
 // =================
 export const PreviewCon = styled(Animated.View)`
   margin: auto;
+  width: 100%;
+`
+export const PreviewAV = styled(Animated.createAnimatedComponent(Video))`
+  margin: auto;
+  height: 90%;
+  width: 100%;
+`
+export const PreviewGallery = styled(Animated.createAnimatedComponent(Gallery))`
+  position: absolute;
+  top: 5%;
+  height: 90%;
   width: 100%;
 `
 
@@ -190,7 +203,6 @@ export const DownloadProgressBarCon = styled(Animated.View)`
   position: absolute;
   width: 100%;
   height: 50px;
-  bottom: 10px;
 `
 export const DownloadProgressBarTopRow = styled.View`
   flex-direction: row;
@@ -200,20 +212,6 @@ export const DownloadProgressBarTopRow = styled.View`
 `
 export const DownloadProgressBarText = styled.Text`
   margin-bottom: 6px;
-  margin-left: 3px;
-  color: white;
-`
-export const DownloadProgressBarButtonsBar = styled.View`
-  flex-direction: row;
-  margin-left: auto;
-`
-export const DownloadProgressBarButtonsCon = styled.TouchableOpacity`
-  margin-left: 2px;
-  margin-right: 2px;
-  border-radius: 0px;
-`
-export const DownloadProgressBarButtonsIcon = styled(Entypo)`
-  font-size: 18px;
   color: white;
 `
 export const DownloadProgressBar = styled(Animated.View)`

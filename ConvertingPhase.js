@@ -1,8 +1,11 @@
 import {GetRandomInt, Sleep} from './VoidTools'
 import {Animated, ToastAndroid} from 'react-native'
 import {res} from './style'
+import {RestoreDefault} from './RestoreDefault'
+import {ProgressBarValues} from './DownloadingFile'
+import {imageGallery, imageUri} from './ImageGallery'
 
-export const DownloadManager = async (URL, Animations, States, AppProcessState, VideoURLs, VideoNames, APIResponse, MainButtonBorderLeft) => {
+export const DownloadManager = async (URL, Animations, States, AppProcessState, VideoURLs, VideoNames, APIResponse, MainButtonBorderLeft, DownloadProgressBarBorderLeft) => {
     if(URL==='' || URL===null) {
         ToastAndroid.show('Wprowadź URL', 2)
         return
@@ -42,21 +45,19 @@ export const DownloadManager = async (URL, Animations, States, AppProcessState, 
                 States.setIconDownloadDisplay('flex')
                 States.setIconCrossDisplay('none')
 
-                DownloadEndAnim(Animations, States)
+                DownloadEndAnim(Animations, States, VideoURLs)
             } else {
                 ToastAndroid.show('Pobierany plik jest przestarzały, spróbuj ponownie', 2)
-                //CANCEL FORM
+                RestoreDefault(Animations, States, AppProcessState, VideoURLs, VideoNames, APIResponse, MainButtonBorderLeft, ProgressBarValues, DownloadProgressBarBorderLeft)
             }
         } else {
             ToastAndroid.show('Niepoprawny URL', 2)
-            //CANCEL FORM
+            RestoreDefault(Animations, States, AppProcessState, VideoURLs, VideoNames, APIResponse, MainButtonBorderLeft, ProgressBarValues, DownloadProgressBarBorderLeft)
         }
     } else {
-        ToastAndroid.show('API nie wyrabia, spróbuj ponownie później', 2)
-        //CANCEL FORM
+        ToastAndroid.show('Niepoprawna platforma', 2)
+        RestoreDefault(Animations, States, AppProcessState, VideoURLs, VideoNames, APIResponse, MainButtonBorderLeft, ProgressBarValues, DownloadProgressBarBorderLeft)
     }
-
-    console.log(VideoURLs)
 }
 
 const DownloadCheckAvailability = async (URL, APIResponse, States, Quality) => {
@@ -201,7 +202,7 @@ const DownloadSetProgress = async (MainButtonBorderLeft, APIResponse, AppProcess
     return success
 }
 
-const DownloadEndAnim = (Animations, States) => {
+const DownloadEndAnim = (Animations, States, VideoURLs) => {
     States.setPreviewDisplay('flex')
     States.setURLInputDisplay('none')
     States.setCancelButtonDisplay('flex')
@@ -209,7 +210,26 @@ const DownloadEndAnim = (Animations, States) => {
     Animations.MainButtonBorderTopExtend.start()
     Animations.MainButtonBorderLeftShrink.start()
 
-    setTimeout(function(){ Animations.CancelButtonFadeIn.start() }, 1800)
+    for(let i = 0; i<VideoURLs.length; i++) {
+        imageGallery.push(imageUri(VideoURLs[i]))
+    }
+
+    // if(VideoURLs.length>1) {
+    //     States.setPreviewGalleryDisplay('flex')
+    // } else {
+    //     States.setPreviewVideoDisplay('flex')
+    // }
+
+    setTimeout(function(){
+        Animations.CancelButtonFadeIn.start()
+        if(VideoURLs.length>1) {
+            States.setPreviewGalleryDisplay('flex')
+            Animations.PreviewGalleryFadeIn.start()
+        } else {
+            States.setPreviewVideoDisplay('flex')
+            Animations.PreviewVideoFadeIn.start()
+        }
+    }, 1800)
 
     setTimeout(async function (){
         await Animations.MainButtonBorderTopShrink.start()
