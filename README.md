@@ -68,6 +68,4 @@ Aby zainstalować aplikację najpierw trzeba pobrać plik .apk z zakładki [RELE
 - 23.04.2022 - Hotfix 3: Zmiana splash screena na lepszą jakość
 
 # Autorzy
-- **@onhq11**
-	- **Discord**: onhq#8799
-	- **Github**: [@onhq11](https://github.com/onhq11)
+- **[@onhq11](https://github.com/onhq11)**
