@@ -51,7 +51,7 @@ Aby zainstalować aplikację najpierw trzeba pobrać plik .apk z zakładki [RELE
 - 31.03.2022 - Rework aplikacji, zmiana całego wyglądu aplikacji
 - 08.04.2022 - Poprawione skalowanie pod różne urządzenia, dodane wsparcie dla telefonów Android 5.0+, dodana opcja wyeksportowania linku (Skopiowanie, Otwarcie w przeglądarce), nowe animacje, poprawione pobieranie, rozpoczęcie pracy nad progress barem, dodane wsparcie dla postów z instagrama z więcej niż jednym zdjęciem, nowa mechanika alertów, czyszczenie formularza
 - 13.04.2022 - Dokończony progressbar z przyciskami (Start, Pause, Stop) kontrolującymi pobieranie
-- 14.04.2022 - **FATALNY BŁĄÐ, PODCZAS POBIERANIA Z SERWERÓW POSTAWIONYCH NA NGINX (W TYM NASZYM) JEST BŁĄD 416**
+- 14.04.2022 - **<span style="color: red;">FATALNY BŁĄÐ, PODCZAS POBIERANIA Z SERWERÓW POSTAWIONYCH NA NGINX (W TYM NASZYM) JEST BŁĄD 416</span>**
 - 15.04.2022 - Usunięcie progressbara pobierania pliku na urządzenie, dodany komunikat na początku i końcu pobierania
 - 15.04.2022 - Wypuszczenie wersji Beta-v0.9.2
 
