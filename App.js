@@ -1,6 +1,6 @@
 import AppLoading from 'expo-app-loading'
 import {useEffect, useRef, useState} from 'react'
-import {Animated, Clipboard, Keyboard, Linking, ToastAndroid} from 'react-native'
+import {Animated, Clipboard, Keyboard, Linking, ToastAndroid, Share} from 'react-native'
 import {useFonts, OpenSans_300Light, OpenSans_400Regular} from '@expo-google-fonts/open-sans'
 
 import {
@@ -270,7 +270,7 @@ export default function App() {
                             </NavButRow>
                         </NavRow>
                     </MainCon>
-                    <NavMiniMenuCon style={[{opacity: QualityOpac, display: States.QualityDisplay}]}>
+                    <NavMiniMenuCon style={[{opacity: QualityOpac, display: States.QualityDisplay, top: '90%'}]}>
                         <NavMiniMenuText>Wybierz jakość</NavMiniMenuText>
                         <NavMiniMenuRow>
                             <NavMiniMenuIconCon onPress={() => APIResponse.quality = 'best'}>
@@ -286,6 +286,9 @@ export default function App() {
                         <NavMiniMenuRow>
                             <NavMiniMenuIconCon onPress={() => {Clipboard.setString(VideoURLs[0]); ToastAndroid.show('Skopiowano', 2); Animations.ExternalLinkFadeOut.start(); setTimeout(function(){ States.setExternalLinkDisplay('none') }, 600)}}>
                                 <NavMiniMenuIcon name='content-copy' color='#eee'/>
+                            </NavMiniMenuIconCon>
+                            <NavMiniMenuIconCon onPress={() => {Share.share({message: VideoURLs[0]}); Animations.ExternalLinkFadeOut.start(); setTimeout(function(){ States.setExternalLinkDisplay('none') }, 600)}}>
+                                <NavMiniMenuIcon name='share' color='#eee'/>
                             </NavMiniMenuIconCon>
                             <NavMiniMenuIconCon onPress={() => {Linking.canOpenURL(VideoURLs[0]).then(canOpen => {if(canOpen) Linking.openURL(VideoURLs[0])}); Animations.ExternalLinkFadeOut.start(); setTimeout(function(){ States.setExternalLinkDisplay('none') }, 600)}}>
                                 <NavMiniMenuIcon name='open-in-browser' color='#eee'/>
