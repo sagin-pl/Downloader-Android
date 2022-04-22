@@ -1,5 +1,5 @@
 # Downloader-Android
-[![Release](https://img.shields.io/badge/release-Alpha--v0.3.3-blue)](https://github.com/sagin-pl/Downloader-Android/releases/tag/Alpha-v0.3.3)
+[![Release](https://img.shields.io/badge/alpha-Alpha--v0.3.3-blue)](https://github.com/sagin-pl/Downloader-Android/releases/tag/Alpha-v0.3.3)
 [![Project](https://img.shields.io/badge/project-SAGIN--PL-green)](https://github.com/sagin-pl)
 
 Downloader to aplikacja na różne platformy umożliwiająca pobieranie zdjęć i filmów z popularnych platform takich jak Instagram, TikTok, Youtube.
