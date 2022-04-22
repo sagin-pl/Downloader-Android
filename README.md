@@ -51,3 +51,6 @@ Aby zainstalować aplikację najpierw trzeba pobrać plik .apk z zakładki [RELE
 - 14.04.2022 - **FATALNY BŁĄÐ, PODCZAS POBIERANIA Z SERWERÓW POSTAWIONYCH NA NGINX (W TYM NASZYM) JEST BŁĄD 416**
 - 15.04.2022 - Usunięcie progressbara pobierania pliku na urządzenie, dodany komunikat na początku i końcu pobierania
 - 15.04.2022 - Wypuszczenie wersji Beta-v0.9.2
+
+# Autorzy
+- [@onhq11](https://github.com/onhq11)
