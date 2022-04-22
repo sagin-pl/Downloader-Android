@@ -38,3 +38,6 @@ Aby zainstalować aplikację najpierw trzeba pobrać plik .apk z zakładki [RELE
 - 29.03.2022 - Dopracowane pobieranie, animacja progress bara, optymalizacja kodu
 - 30.03.2022 - Dodany przycisk do automatycznego wklejenia linku, rezygnacja z przycinania filmu, usunięcie nawigacji
 - 30.03.2022 - Wypuszczenie wersji Alpha-v0.3.3
+
+# Autorzy
+- [@onhq11](https://github.com/onhq11)
