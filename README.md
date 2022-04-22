@@ -69,8 +69,4 @@ Aby zainstalować aplikację najpierw trzeba pobrać plik .apk z zakładki [RELE
 
 # Autorzy
 - [@onhq11](https://github.com/onhq11)
-
-# Kontakt
-- Email: mateuszmatecki25@gmail.com
-- Discord: onhq#8799
-- Github: [onhq11](https://github.com/onhq11)
+	- Discord: onhq#8799
