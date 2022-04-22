@@ -65,6 +65,7 @@ Aby zainstalować aplikację najpierw trzeba pobrać plik .apk z zakładki [RELE
 - 20.04.2022 - Wypuszczenie wersji Release-v1.0.0
 - 21.04.2022 - Hotfix 1: Naprawione nakładanie się na siebie podglądów, w efekcie nie można było odtworzyć podglądu
 - 22.04.2022 - Hotfix 2: Poprawiona wydajność animacji podczas wyświetlania galerii jako podglądu, ale dalej nie jest idealnie
+- 23.04.2022 - Hotfix 3: Zmiana splash screena na lepszą jakość
 
 # Autorzy
 - [@onhq11](https://github.com/onhq11)
