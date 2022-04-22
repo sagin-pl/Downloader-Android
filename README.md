@@ -5,8 +5,8 @@
 Downloader to aplikacja na różne platformy umożliwiająca pobieranie zdjęć i filmów z popularnych platform takich jak Instagram, TikTok, Youtube.
 
 #### SPIS TREŚCI
-- [Wymagania](?readme=1#wymagania)
-- [Funkcje](?readme=1#funkcje)
+- [Wymagania](#wymagania)
+- [Funkcje](#funkcje)
 - [Instalacja](#instalacja)
 - [Screenshots](#screenshots)
 - [Changelog](#changelog)
