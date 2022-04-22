@@ -5,11 +5,11 @@
 Downloader to aplikacja na różne platformy umożliwiająca pobieranie zdjęć i filmów z popularnych platform takich jak Instagram, TikTok, Youtube.
 
 #### SPIS TREŚCI
-- [Wymagania](https://github.com/sagin-pl/Downloader-Android/new/Release-v1.0.0?readme=1#wymagania)
-- [Funkcje](https://github.com/sagin-pl/Downloader-Android/new/Release-v1.0.0?readme=1#funkcje)
-- [Instalacja](https://github.com/sagin-pl/Downloader-Android/new/Release-v1.0.0?readme=1#instalacja)
-- [Screenshots](https://github.com/sagin-pl/Downloader-Android/new/Release-v1.0.0?readme=1#screenshots)
-- [Changelog](https://github.com/sagin-pl/Downloader-Android/new/Release-v1.0.0?readme=1#changelog)
+- [Wymagania](#wymagania)
+- [Funkcje](#funkcje)
+- [Instalacja](#instalacja)
+- [Screenshots](#screenshots)
+- [Changelog](#changelog)
 
 #### WYMAGANIA
 - Android 5.0+
