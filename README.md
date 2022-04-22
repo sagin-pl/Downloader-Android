@@ -10,6 +10,7 @@ Downloader to aplikacja na różne platformy umożliwiająca pobieranie zdjęć 
 - [Instalacja](#instalacja)
 - [Screenshots](#screenshots)
 - [Changelog](#changelog)
+- [Autorzy](#autorzy)
 
 #### WYMAGANIA
 - Android 5.0+
@@ -64,3 +65,6 @@ Aby zainstalować aplikację najpierw trzeba pobrać plik .apk z zakładki [RELE
 - 20.04.2022 - Wypuszczenie wersji Release-v1.0.0
 - 21.04.2022 - Hotfix 1: Naprawione nakładanie się na siebie podglądów, w efekcie nie można było odtworzyć podglądu
 - 22.04.2022 - Hotfix 2: Poprawiona wydajność animacji podczas wyświetlania galerii jako podglądu, ale dalej nie jest idealnie
+
+# Autorzy
+- [@onhq11](https://github.com/onhq11)
