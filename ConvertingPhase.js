@@ -11,8 +11,11 @@ export const DownloadManager = async (URL, Animations, States, AppProcessState, 
         return
     }
 
-    States.setIconDownloadDisplay('none')
-    States.setIconCrossDisplay('flex')
+    // States.setIconDownloadDisplay('none')
+    // States.setIconCrossDisplay('flex')
+
+    States.setDownloadActiveColor('#bbb')
+    States.setDownloadActiveState(true)
 
     States.setClipboardActiveColor('#bbb')
     States.setClipboardActiveState(true)
@@ -39,11 +42,14 @@ export const DownloadManager = async (URL, Animations, States, AppProcessState, 
             const ProgressFilled = await DownloadSetProgress(MainButtonBorderLeft, APIResponse, AppProcessState, VideoURLs, VideoNames)
             if (ProgressFilled && APIResponse.error === 'none' && AppProcessState==='convert') {
                 AppProcessState = 'download'
-                States.setExternalLinkActiveState(false)
                 States.setExternalLinkActiveColor('#eee')
+                States.setExternalLinkActiveState(false)
 
-                States.setIconDownloadDisplay('flex')
-                States.setIconCrossDisplay('none')
+                States.setDownloadActiveColor('#eee')
+                States.setDownloadActiveState(false)
+
+                // States.setIconDownloadDisplay('flex')
+                // States.setIconCrossDisplay('none')
 
                 DownloadEndAnim(Animations, States, VideoURLs)
             } else {
@@ -173,6 +179,8 @@ const DownloadSetProgress = async (MainButtonBorderLeft, APIResponse, AppProcess
                             if (Object.values(response)[0][i].length<=1) {
                                 VideoURLs.push(Object.values(response)[0])
                                 VideoNames.push(Object.values(response)[0].substring(23))
+
+                                APIResponse.size = response.size
                                 break;
                             } else {
                                 VideoURLs.push(Object.values(response)[0][i])

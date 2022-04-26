@@ -14,7 +14,7 @@ export let ProgressBarValues = {
 
 let ItemsInQueue = 0
 
-export const DownloadFile = async (States, Animations, VideoURLs, VideoNames, DownloadProgressBarBorderLeft) => {
+export const DownloadFile = async (States, Animations, VideoURLs, VideoNames, DownloadProgressBarBorderLeft, APIResponse) => {
     if(ItemsInQueue>0) {
         ToastAndroid.show('Poczekaj, aż poprzedni plik się pobierze', 2)
         return
@@ -31,8 +31,6 @@ export const DownloadFile = async (States, Animations, VideoURLs, VideoNames, Do
         }).start()
     }
 
-    await Animations.DownloadProgressBarBottomIn.start()
-
     ToastAndroid.show('Pobieranie rozpoczęte', 2)
     DownloadButtonState('off', States)
 
@@ -40,7 +38,7 @@ export const DownloadFile = async (States, Animations, VideoURLs, VideoNames, Do
         const url = VideoURLs[i]
         let FileUri = FileSystem.documentDirectory + VideoNames[i]
 
-        UpdateBytesToWrite(url)
+        ProgressBarValues.ExpectedToWrite = APIResponse.size
 
         ItemsInQueue = ItemsInQueue+1
         FileSystem.downloadAsync(url, FileUri)
@@ -66,9 +64,15 @@ export const DownloadFile = async (States, Animations, VideoURLs, VideoNames, Do
 const UpdateDownloadProgressBar = (States, Animations, DownloadProgressBarBorderLeft) => {
     if(ProgressBarValues.Shown===0) return
 
-    if(ProgressBarValues.ExpectedToWrite===0 || typeof ProgressBarValues.ExpectedToWrite !== 'number') {
+    if(ProgressBarValues.ExpectedToWrite===0 || typeof ProgressBarValues.ExpectedToWrite !== 'number' || ProgressBarValues.Written === undefined || typeof ProgressBarValues.Written !== 'number' || ProgressBarValues.Written>ProgressBarValues.ExpectedToWrite) {
         let progress = ProgressBarValues.Written/1000000
-        States.setDownloadProgressBarPercentage(progress.toFixed(2))
+
+        if(typeof progress === 'number') {
+            States.setDownloadProgressBarPercentage(progress.toFixed(2))
+        } else {
+            States.setDownloadProgressBarPercentage(0)
+        }
+
         States.setDownloadProgressBarUnit('MB')
     } else {
         let progress = (ProgressBarValues.Written/ProgressBarValues.ExpectedToWrite)*100
@@ -88,23 +92,14 @@ const UpdateDownloadProgressBar = (States, Animations, DownloadProgressBarBorder
 
 const UpdateBytesWritten = async (FileUri) => {
     const { size } = await FileSystem.getInfoAsync(FileUri)
-    ProgressBarValues.Written = size
 
-    setTimeout(function(){UpdateBytesWritten(FileUri)}, 200)
-}
-
-const UpdateBytesToWrite = (url) => {
-    const http = new XMLHttpRequest()
-    http.open('HEAD', url, true)
-    http.onreadystatechange = function () {
-        if (this.readyState === this.DONE) {
-            if (this.status === 200) {
-                ProgressBarValues.ExpectedToWrite = parseInt(this.getResponseHeader('content-length'))
-            }
-        }
+    if(typeof size === 'number') {
+        ProgressBarValues.Written = size
+    } else {
+        ProgressBarValues.Written = 0
     }
 
-    http.send()
+    setTimeout(function(){UpdateBytesWritten(FileUri)}, 200)
 }
 
 const saveFile = async (fileUri) => {

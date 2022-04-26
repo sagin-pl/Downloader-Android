@@ -48,6 +48,7 @@ let AppProcessState = 'main'
 let VideoURLs = new Array()
 let VideoNames = new Array()
 let APIResponse = {
+    size: 0,
     error: 'none',
     quality: 'none',
     trackURL: 'none'
@@ -325,15 +326,15 @@ const ActionManager = async (Type, Animations, States, MainButtonBorderLeft, Dow
             if (States.IconDownloadDisplay==='flex' && States.PreviewDisplay==='none') {
                 await DownloadManager(States.URL, Animations, States, AppProcessState, VideoURLs, VideoNames, APIResponse, MainButtonBorderLeft, DownloadProgressBarBorderLeft)
             } else if (States.IconDownloadDisplay==='flex' && States.PreviewDisplay==='flex') {
-                await DownloadFile(States, Animations, VideoURLs, VideoNames, DownloadProgressBarBorderLeft)
+                await DownloadFile(States, Animations, VideoURLs, VideoNames, DownloadProgressBarBorderLeft, APIResponse)
             } else if (States.IconCrossDisplay==='flex') {
                 RestoreDefault(Animations, States, AppProcessState, VideoURLs, VideoNames, APIResponse, MainButtonBorderLeft, ProgressBarValues, DownloadProgressBarBorderLeft)
             }
             break;
 
         case 'clipboard':
-            States.setIconDownloadDisplay('none')
-            States.setIconCrossDisplay('flex')
+            // States.setIconDownloadDisplay('none')
+            // States.setIconCrossDisplay('flex')
 
             let text = await Clipboard.getString()
             States.setURL(text)
