@@ -140,13 +140,16 @@ export const NavMiniMenuRow = styled.View`
   flex-direction: row;
 `
 export const NavMiniMenuIconCon = styled.TouchableOpacity`
+  border: 0.5px solid white;
+  border-radius: 10px;
   margin-top: 10px;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: auto;
 `
 export const NavMiniMenuIcon = styled(MaterialIcons)`
-  font-size: 30px;
+  font-size: 20px;
+  margin: 5px;
 `
 
 // ================================

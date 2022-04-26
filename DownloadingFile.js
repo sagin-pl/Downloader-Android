@@ -40,19 +40,26 @@ export const DownloadFile = async (States, Animations, VideoURLs, VideoNames, Do
 
         ProgressBarValues.ExpectedToWrite = APIResponse.size
 
-        ItemsInQueue = ItemsInQueue+1
-        FileSystem.downloadAsync(url, FileUri)
-            .then(({ uri }) => {
-                RestoreProgressBar(Animations, DownloadProgressBarBorderLeft)
-                DownloadButtonState('on', States)
-                saveFile(uri)
-            })
-            .catch(error => {
-                RestoreProgressBar(Animations, DownloadProgressBarBorderLeft)
-                DownloadButtonState('on', States)
-                ToastAndroid.show(error, 2)
-                console.log(error)
-            })
+        if(ProgressBarValues.ExpectedToWrite < 2500 && ProgressBarValues.ExpectedToWrite!==0) {
+            ToastAndroid.show('Pobierany plik jest przestarzały, spróbuj ponownie', 2)
+            RestoreProgressBar(Animations, DownloadProgressBarBorderLeft)
+            DownloadButtonState('on', States)
+            return
+        } else {
+            ItemsInQueue = ItemsInQueue + 1
+            FileSystem.downloadAsync(url, FileUri)
+                .then(({uri}) => {
+                    RestoreProgressBar(Animations, DownloadProgressBarBorderLeft)
+                    DownloadButtonState('on', States)
+                    saveFile(uri)
+                })
+                .catch(error => {
+                    RestoreProgressBar(Animations, DownloadProgressBarBorderLeft)
+                    DownloadButtonState('on', States)
+                    ToastAndroid.show(error, 2)
+                    console.log(error)
+                })
+        }
 
         await UpdateBytesWritten(FileUri, 0)
     }

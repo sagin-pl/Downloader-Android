@@ -274,18 +274,18 @@ export default function App() {
                     <NavMiniMenuCon style={[{opacity: QualityOpac, display: States.QualityDisplay, top: '90%'}]}>
                         <NavMiniMenuText>Wybierz jakość</NavMiniMenuText>
                         <NavMiniMenuRow>
-                            <NavMiniMenuIconCon onPress={() => APIResponse.quality = 'best'}>
-                                <NavMiniMenuIcon name='hd' color='#eee'/>
+                            <NavMiniMenuIconCon onPress={() => APIResponse.quality = 'best'} style={[{borderWidth: 0}]}>
+                                <NavMiniMenuIcon name='hd' color='#eee' style={[{fontSize: 30, marginTop: 0}]}/>
                             </NavMiniMenuIconCon>
-                            <NavMiniMenuIconCon onPress={() => APIResponse.quality = 'hd'}>
-                                <NavMiniMenuIcon name='sd' color='#eee'/>
+                            <NavMiniMenuIconCon onPress={() => APIResponse.quality = 'hd'} style={[{borderWidth: 0}]}>
+                                <NavMiniMenuIcon name='sd' color='#eee' style={[{fontSize: 30, marginTop: 0}]}/>
                             </NavMiniMenuIconCon>
                         </NavMiniMenuRow>
                     </NavMiniMenuCon>
                     <NavMiniMenuCon style={[{opacity: ExternalLinkOpac, display: States.ExternalLinkDisplay}]}>
-                        <NavMiniMenuText>Eksportuj Link</NavMiniMenuText>
+                        <NavMiniMenuText style={[{fontSize: 16}]}>Eksportuj Link</NavMiniMenuText>
                         <NavMiniMenuRow>
-                            <NavMiniMenuIconCon onPress={() => {Clipboard.setString(VideoURLs[0]); ToastAndroid.show('Skopiowano', 2); Animations.ExternalLinkFadeOut.start(); setTimeout(function(){ States.setExternalLinkDisplay('none') }, 600)}}>
+                            <NavMiniMenuIconCon onPress={() => {if(VideoURLs[0]!==undefined || VideoURLs[0]!==null){ Clipboard.setString(VideoURLs[0]); ToastAndroid.show('Skopiowano', 2); Animations.ExternalLinkFadeOut.start(); setTimeout(function(){ States.setExternalLinkDisplay('none') }, 600) } else { ToastAndroid.show('Wystąpił problem podczas kopiowania linku, uruchom ponownie aplikację', 2) }}}>
                                 <NavMiniMenuIcon name='content-copy' color='#eee'/>
                             </NavMiniMenuIconCon>
                             <NavMiniMenuIconCon onPress={() => {Share.share({message: VideoURLs[0]}); Animations.ExternalLinkFadeOut.start(); setTimeout(function(){ States.setExternalLinkDisplay('none') }, 600)}}>
