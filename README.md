@@ -4,7 +4,7 @@
 
 Downloader to aplikacja na różne platformy umożliwiająca pobieranie zdjęć i filmów z popularnych platform takich jak Instagram, TikTok, Youtube.
 
-#### SPIS TREŚCI
+# Spis Treści
 - [Wymagania](#wymagania)
 - [Funkcje](#funkcje)
 - [Instalacja](#instalacja)
@@ -12,16 +12,16 @@ Downloader to aplikacja na różne platformy umożliwiająca pobieranie zdjęć 
 - [Changelog](#changelog)
 - [Autorzy](#autorzy)
 
-#### WYMAGANIA
+# Wymagania
 - Android 5.0+
 - Stałe połączenie z internetem
 
-#### FUNKCJE
+# Funkcje
 - Pobieranie filmu lub zdjęcia
 - Podgląd przed pobraniem pliku (v0.9.2+)
 - Możliwość udostępnienia filmu bez pobierania (v0.9.2+) </br>
 
-#### INSTALACJA
+# Instalacja
 Aby zainstalować aplikację najpierw trzeba pobrać plik .apk z zakładki [RELEASE](https://github.com/sagin-pl/Downloader-Android/releases). Po pobraniu należy plik otworzyć i włączyć opcję Nieznane Źródła jeżeli system o to poprosi. Po zainstalowaniu może pojawić się komunikat Play Protect, który będzie chciał odinstalować aplikację, jest to spowodowane niskim budżetem projektu, więc nie dodaliśmy naszej aplikacji do sklepu Google Play. Aplikacja jest jak najbardziej bezpieczna <img src="https://upload.wikimedia.org/wikipedia/en/thumb/9/9a/Trollface_non-free.png/220px-Trollface_non-free.png" width="auto" height="30px">, należy kliknąć "ZAINSTALUJ MIMO TO" lub "INSTALL ANYWAY"
 
 # Screenshots
