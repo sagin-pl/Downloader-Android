@@ -52,14 +52,14 @@ Aby zainstalować aplikację najpierw trzeba pobrać plik .apk z zakładki [RELE
 - 31.03.2022 - Rework aplikacji, zmiana całego wyglądu aplikacji
 - 08.04.2022 - Poprawione skalowanie pod różne urządzenia, dodane wsparcie dla telefonów Android 5.0+, dodana opcja wyeksportowania linku (Skopiowanie, Otwarcie w przeglądarce), nowe animacje, poprawione pobieranie, rozpoczęcie pracy nad progress barem, dodane wsparcie dla postów z instagrama z więcej niż jednym zdjęciem, nowa mechanika alertów, czyszczenie formularza
 - 13.04.2022 - Dokończony progressbar z przyciskami (Start, Pause, Stop) kontrolującymi pobieranie
-- 14.04.2022 - **<span style="color: red;">FATALNY BŁĄÐ, PODCZAS POBIERANIA Z SERWERÓW POSTAWIONYCH NA NGINX (W TYM NASZYM) JEST BŁĄD 416</span>**
+- 14.04.2022 - **FATALNY BŁĄÐ, PODCZAS POBIERANIA Z SERWERÓW POSTAWIONYCH NA NGINX (W TYM NASZYM) JEST BŁĄD 416**
 - 15.04.2022 - Usunięcie progressbara pobierania pliku na urządzenie, dodany komunikat na początku i końcu pobierania
 - 15.04.2022 - Wypuszczenie wersji Beta-v0.9.2
 
 #### RELEASE
 - 16.04.2022 - Przywrócenie progressbara pobierania pliku, tym razem nie korzysta on z gotowej biblioteki, tylko progress jest obliczany ręcznie (Wielkość pliku na serwerze / Wielkość zapisanego pliku)
 - 17.04.2022 - Dodano galerię do podglądu zdjęć z Instagrama, dodano opcję udostępniania linku, dodano ikonę
-- 18.04.2022 - **FATALNY BŁĄD, PODCZAS POBIERANIA ZE SŁABYM ŁĄCZEM INTERNETOWYM MOŻE WYSTĄPIĆ PROBLEM Z PROGRESSBAREM POBIERANIA PLIKU NA URZĄDZENIE, POWÓD: POBIERANIE PLIKU ZACZYNA SIĘ SZYBCIEJ NIŻ APLIKACJA POBIERZE WIELKOŚĆ PLIKU Z SERWERA**
+- 18.04.2022 - ~**FATALNY BŁĄD, PODCZAS POBIERANIA ZE SŁABYM ŁĄCZEM INTERNETOWYM MOŻE WYSTĄPIĆ PROBLEM Z PROGRESSBAREM POBIERANIA PLIKU NA URZĄDZENIE, POWÓD: POBIERANIE PLIKU ZACZYNA SIĘ SZYBCIEJ NIŻ APLIKACJA POBIERZE WIELKOŚĆ PLIKU Z SERWERA**~ (Naprawione w aktualizacji: Hotfix 4)
 - 19.04.2022 - **PRÓBA NAPRAWIENIA BŁĘDU NIE POWIODŁA SIĘ, ROZPOCZĘCIE POBIERANIA DOPIERO PO POBRANIU WIELKOŚCI PLIKU Z SERWERA W 3/10 PRZYPADKÓW APLIKACJA NIE ROZPOCZYNA POBIERANIA**
 - 20.04.2022 - **OCZEKIWANIE NA AKTUALIZACJĘ API, ABY ZMIEJSZYĆ CZAS OCZEKIWANIA NA POBRANIE WIELKOŚCI PLIKU, ROZMIAR BĘDZIE ZWRACANY RAZEM Z LINKIEM**
 - 20.04.2022 - Wypuszczenie wersji Release-v1.0.0
